@@ -1,0 +1,11 @@
+<% provide(:title, 'Movies') %>
+<h1>All movies</h1>
+<h2><%= @movies.count %></h2>
+
+<%= will_paginate %>
+
+<ul>
+  <%= render @movies %>
+</ul>
+
+<%= will_paginate %>

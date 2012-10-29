@@ -1,0 +1,11 @@
+<% provide(:title, @movie.name) %>
+<div class="row">
+  <aside class="span6">
+    <section>
+      <h1><%= @movie.name %></h1>
+      <%= image_tag("/data/movies/#{@movie.id}.jpg", alt: @movie.name, width: "350px") %>
+      <p>ID: <%= @movie.id%></p><br/>
+      <p>IMDB: <%= @movie.imdb_id%></p><br/>
+    </section>
+  </aside>
+</div>

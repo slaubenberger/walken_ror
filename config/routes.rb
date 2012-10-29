@@ -1,6 +1,10 @@
 Walken::Application.routes.draw do
-  get "users/new"
-
+  #get "users/new"
+  resources :users
+  resources :movies
+  
+  match '/movies',  to: 'movies#index'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,0 +1,19 @@
+span.head {
+  margin: 5px;
+  color: black;
+  border-bottom-style: solid;
+  border-width: 1px;
+  display:block;
+}
+
+span.foot {
+  margin: 5px;
+  color: black;
+  border-top-style: dotted;
+  border-width: 1px;
+  display:block;
+}
+
+div.debug {
+  background-color: lightgreen;
+}

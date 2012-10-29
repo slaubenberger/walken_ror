@@ -43,17 +43,23 @@ class Scanner < Struct.new(:counter, :size)
       begin
 	imdb = Imdb::Search.new(name).movies.first
       rescue
-	puts "+++++++++++++++ BAD! ++++++++++++++++++"
+	puts "+++++++++++++++ BAD! Search failed ++++++++++++++++++"
       else
-	movie = Movie.find_or_initialize_by_imdb_id(imdb.id)
-	movie.update_attributes({name: imdb.title, imdb_id: imdb.id})
-	movie.save
+	unless imdb.nil?
+	  movie = Movie.find_or_initialize_by_imdb_id(imdb.id)
+	  movie.update_attributes({name: imdb.title, imdb_id: imdb.id})
+	  movie.save
 
-	#puts "IMDB: #{imdb.title} - #{imdb.id} - #{imdb.poster}"
-	
-	movieFile = MovieFile.find_or_initialize_by_movie_id(movie.id)
-	movieFile.update_attributes({movie_id: movie.id, user_id: user.id, path: filename})
-	movieFile.save
+	  #`wget -O ../data/movies/#{movie.id}.jpg #{imdb.poster}`
+	  `wget -q -O ~/data/movies/#{movie.id}.jpg #{imdb.poster}`
+	  #puts "IMDB: #{imdb.title} - #{imdb.id} - #{imdb.poster}"
+	  
+	  movieFile = MovieFile.find_or_initialize_by_movie_id(movie.id)
+	  movieFile.update_attributes({movie_id: movie.id, user_id: user.id, path: filename})
+	  movieFile.save
+	else
+	  puts "+++++++++++++++ BAD! Object nil ++++++++++++++++++"
+	end
       end
       
       @counter += 1
@@ -125,7 +131,7 @@ end
                         except IndexError, e:
                             pass
 =end
-scanner = Scanner.new "/shares/nas/public/video/movies/_english"
+scanner = Scanner.new "/shares/nas/public/video/movies"
 scanner.scan
 
 puts "Files found: #{scanner.counter.to_s}"
